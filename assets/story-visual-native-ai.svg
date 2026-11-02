@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">How GNOME AI Assistant is split across three parts</title>
+<desc id="desc">A source-based architecture diagram: the GNOME Shell extension calls a D-Bus service, which owns the conversation and search; a separate GTK 4 and libadwaita window draws the interface. Closing the window does not discard the service session.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F4F7F6"/><stop offset="1" stop-color="#E6F2F2"/></linearGradient>
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#19313B" flood-opacity=".10"/></filter>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#0D6571"/></marker>
+</defs>
+<rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+<text x="58" y="59" fill="#0D6571" font-family="IBM Plex Mono,monospace" font-size="15" font-weight="600" letter-spacing="2">GNOME AI ASSISTANT / ARCHITECTURE</text>
+<text x="58" y="112" fill="#19313B" font-family="Manrope,Arial,sans-serif" font-size="36" font-weight="800" letter-spacing="-1.5">One assistant. Three clear jobs.</text>
+<text x="58" y="145" fill="#596D75" font-family="Manrope,Arial,sans-serif" font-size="17">The separation described in the repository — not a screenshot of the running app.</text>
+<g filter="url(#shadow)">
+  <rect x="58" y="202" width="302" height="238" rx="20" fill="#ffffff" stroke="#D9E1E0"/>
+  <rect x="449" y="202" width="302" height="238" rx="20" fill="#19313B"/>
+  <rect x="840" y="202" width="302" height="238" rx="20" fill="#ffffff" stroke="#D9E1E0"/>
+</g>
+<text x="84" y="244" fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600" letter-spacing="1.4">01 / GNOME SHELL</text>
+<text x="84" y="285" fill="#19313B" font-family="Manrope,Arial,sans-serif" font-size="23" font-weight="800">Extension</text>
+<text x="84" y="324" fill="#334B56" font-family="Manrope,Arial,sans-serif" font-size="16">Shortcut · top-bar button</text>
+<text x="84" y="350" fill="#334B56" font-family="Manrope,Arial,sans-serif" font-size="16">Window placement · click-away</text>
+<rect x="84" y="379" width="221" height="33" rx="16" fill="#E6F2F2"/>
+<text x="99" y="401" fill="#0D6571" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600">does not spawn processes</text>
+<text x="476" y="244" fill="#B8DDE1" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600" letter-spacing="1.4">02 / SESSION BUS</text>
+<text x="476" y="285" fill="#ffffff" font-family="Manrope,Arial,sans-serif" font-size="23" font-weight="800">Python service</text>
+<text x="476" y="324" fill="#E6F2F2" font-family="Manrope,Arial,sans-serif" font-size="16">Owns conversation · tools · search</text>
+<text x="476" y="350" fill="#E6F2F2" font-family="Manrope,Arial,sans-serif" font-size="16">Mic · progress · reply signals</text>
+<rect x="476" y="379" width="202" height="33" rx="16" fill="#263552"/>
+<text x="491" y="401" fill="#D6EC6B" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600">exits after 30 idle min</text>
+<text x="867" y="244" fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600" letter-spacing="1.4">03 / GTK 4 + LIBADWAITA</text>
+<text x="867" y="285" fill="#19313B" font-family="Manrope,Arial,sans-serif" font-size="23" font-weight="800">Chat window</text>
+<text x="867" y="324" fill="#334B56" font-family="Manrope,Arial,sans-serif" font-size="16">Draws replies · renders native widgets</text>
+<text x="867" y="350" fill="#334B56" font-family="Manrope,Arial,sans-serif" font-size="16">Reloads history when reopened</text>
+<rect x="867" y="379" width="216" height="33" rx="16" fill="#E6F2F2"/>
+<text x="882" y="401" fill="#0D6571" font-family="IBM Plex Mono,monospace" font-size="12" font-weight="600">closing it keeps session</text>
+<path d="M365 302h74" fill="none" stroke="#0D6571" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="369" y="282" fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="11">Open() / D-Bus</text>
+<path d="M756 302h74" fill="none" stroke="#0D6571" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="758" y="282" fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="11">Ask() / signals</text>
+<rect x="58" y="484" width="1084" height="120" rx="18" fill="#ffffff" stroke="#D9E1E0"/>
+<circle cx="91" cy="526" r="7" fill="#0D6571"/><text x="112" y="532" fill="#19313B" font-family="Manrope,Arial,sans-serif" font-size="17" font-weight="750">The service owns state</text>
+<text x="112" y="560" fill="#596D75" font-family="Manrope,Arial,sans-serif" font-size="14">The UI can close and reopen without discarding the conversation.</text>
+<circle cx="642" cy="526" r="7" fill="#0D6571"/><text x="663" y="532" fill="#19313B" font-family="Manrope,Arial,sans-serif" font-size="17" font-weight="750">The shell stays thin</text>
+<text x="663" y="560" fill="#596D75" font-family="Manrope,Arial,sans-serif" font-size="14">SearchProvider2 and the conversation live in the D-Bus service.</text>
+<text x="58" y="638" fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="11">SOURCE: PROJECT README + docs/ARCHITECTURE.md  ·  EDITORIAL DIAGRAM  ·  NOT A PRODUCT SCREENSHOT</text>
+</svg>

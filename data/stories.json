@@ -1,0 +1,357 @@
+{
+  "stories": [
+    {
+      "slug": "native-ai-on-gnome",
+      "title": "GNOME AI Assistant: not another browser tab",
+      "dek": "A GNOME 46 experiment pairs a native chat window with desktop search—and keeps device controls read-only.",
+      "category": "Desktop AI",
+      "published": "2026-11-02",
+      "updated": "2026-11-02",
+      "source_checked": "2026-11-02",
+      "status": "0.1.0 · Early, tested on one machine",
+      "status_tone": "early",
+      "illustration": "desktop",
+      "alt": "Architecture diagram: a GNOME Shell extension calls a D-Bus service that owns the conversation and search; a separate GTK 4 window draws the interface.",
+      "cover_asset": "/assets/story-visual-native-ai.svg",
+      "cover_caption": "A newsroom diagram drawn from the project README and architecture notes; it explains the real process boundary, not a screenshot of the running app. [[1]][[2]]",
+      "tags": ["GNOME", "GTK 4", "Generative UI", "Semantic search", "Voice"],
+      "repositories": [
+        {"name": "gnome-ai-assistant", "url": "https://github.com/amitamit10/gnome-ai-assistant", "kind": "Project repository"}
+      ],
+      "sources": [
+        {"id": 1, "label": "Project README — features, setup, status and limits", "url": "https://raw.githubusercontent.com/amitamit10/gnome-ai-assistant/main/README.md", "kind": "Primary source · project README"},
+        {"id": 2, "label": "Architecture notes — processes, D-Bus and session ownership", "url": "https://raw.githubusercontent.com/amitamit10/gnome-ai-assistant/main/docs/ARCHITECTURE.md", "kind": "Primary source · project documentation"}
+      ],
+      "lede": "The interesting move is not putting a model in a window. It is deciding what the window can do, what the service remembers, and which desktop actions stay out of reach.",
+      "sections": [
+        {
+          "heading": "The shortcut is the product argument",
+          "paragraphs": [
+            "Most assistants ask you to leave your work, open a browser, and start a new conversation. This one begins with a desktop gesture: press Super + / and a GTK 4, libadwaita chat window opens inside GNOME. It follows the desktop theme, accent colour, font, and light-or-dark appearance instead of bringing a second design system into the room.[[1]]",
+            "That is a specific product bet, not a claim that the model itself is new. The project tries to make an assistant feel like a desktop tool: close at hand, shaped by the host environment, and connected to the work already on the machine. The shortcut is the first clue that the interface—not just the prompt—is the experiment."
+          ]
+        },
+        {
+          "heading": "Three components, one conversation",
+          "paragraphs": [
+            "The architecture separates the Shell extension, the background service, and the chat window. The extension handles the top-bar entry point, shortcut, and window placement, then asks the session bus to open the service. The project documentation says that extension does not spawn processes itself.[[2]]",
+            "The Python service owns the conversation, search provider, microphone, and progress/reply signals. A separate GTK window draws the conversation and calls back to the service. Close the window and the service keeps the session; reopen it and the window requests history. After 30 idle minutes, the service exits and D-Bus activation can start it again.[[2]]",
+            "That boundary is the more interesting feature than a diagram with boxes. The window is replaceable; the conversation has an owner. The accompanying architecture map is based on the repository's own description, because the repository does not publish a product screenshot to use honestly."
+          ]
+        },
+        {
+          "heading": "Answers can become native objects",
+          "paragraphs": [
+            "A reply does not have to end as a paragraph. The project includes ready-made widgets such as charts, gauges, tables, timers, checklists, file grids, and quick replies. The model chooses a component and provides data; the application validates that data against a schema and builds the matching GTK widget.[[1]][[2]]",
+            "The distinction is deliberate. The interface has a finite vocabulary that the application owns, rather than arbitrary markup invented for each answer. A numeric question can become a chart; a next step can become a checklist; a file search can return a file grid. Those are small interaction choices, but they make the assistant feel more like a desktop feature than a chat transcript with decoration.[[1]]",
+            "Device information follows the same principle. Ask about battery, Wi-Fi, or disk and the assistant can show live gauges; the README describes those device tools as read-only. It reports the state without offering to change the machine's settings.[[1]]"
+          ]
+        },
+        {
+          "heading": "Semantic search has a real footprint",
+          "paragraphs": [
+            "The project also connects to GNOME Overview search. A query such as “screenshots of the settings menu” is meant to find files and media by meaning, not only by filename; an “ask” query can answer from indexed notes. Voice input provides another route into the same assistant.[[1]]",
+            "That convenience is not free or entirely local. The README describes semantic indexing as optional and says its embedding stack can require several gigabytes; CPU indexing can be slow. It also states that chat, web search, voice, and the snippets used for “ask” go to Google. Those details are part of the product design, not small print to hide after an install command.[[1]]"
+          ]
+        },
+        {
+          "heading": "A promising 0.1.0—not universal desktop support",
+          "paragraphs": [
+            "The repository labels the project early, says it was developed on one machine, and names GNOME 46 on Zorin OS 18 as its tested target. That is a useful boundary: the public code documents an experiment, not a promise that every GNOME distribution or configuration behaves the same way.[[1]]",
+            "The idea worth following is the interface contract: native widgets, a separate session owner, desktop search, and a read-only path for device information. Whether those pieces feel natural in daily use is the next question. The README remains the source of truth for current compatibility and setup."
+          ]
+        }
+      ],
+      "takeaway": "A desktop assistant is not just chat inside a window. It is a set of decisions about who owns the session, what the model may render, and what the desktop will not let it change.",
+      "source_note": "Repository README and architecture notes checked 2 November 2026. Compatibility and setup can change; follow the linked project sources."
+    },
+    {
+      "slug": "whatsapp-plus-context",
+      "title": "Hermes WhatsApp Plus: context for the group, brakes for the bot",
+      "dek": "A native Hermes plugin adds bounded group history and explicit trust tiers; its voice-call branch is still an experiment.",
+      "category": "Agent systems",
+      "published": "2026-11-02",
+      "updated": "2026-11-02",
+      "source_checked": "2026-11-02",
+      "status": "Open-source Hermes plugin · optional voice calls experimental",
+      "status_tone": "open-source",
+      "illustration": "whatsapp",
+      "alt": "A measured-data chart of three lookups from one real answered WhatsApp call: weather 18.110 seconds, opening hours 23.814 seconds, checkout 34.498 seconds; all began together.",
+      "cover_asset": "/assets/story-visual-whatsapp-lookups.svg",
+      "cover_caption": "Newsroom chart redrawn from the repository's real-call data. One call, three lookups; the summed duration is not a measured sequential run. [[4]][[5]][[16]]",
+      "cover_data_table": {
+        "summary": "View lookup durations",
+        "caption": "One answered call; three lookups started together. Durations are not a sequential run.",
+        "headers": ["Lookup", "Duration"],
+        "rows": [["Weather", "18.110 seconds"], ["Opening hours", "23.814 seconds"], ["Shop checkout", "34.498 seconds"]]
+      },
+      "tags": ["Hermes Agent", "WhatsApp", "Group context", "Trust tiers", "Loop control"],
+      "repositories": [
+        {"name": "hermes-whatsapp-plus", "url": "https://github.com/amitamit10/hermes-whatsapp-plus", "kind": "Plugin repository"},
+        {"name": "Hermes Agent", "url": "https://github.com/NousResearch/hermes-agent", "kind": "Upstream agent project"}
+      ],
+      "sources": [
+        {"id": 3, "label": "Hermes WhatsApp Plus README — plugin design, group behavior and limits", "url": "https://raw.githubusercontent.com/amitamit10/hermes-whatsapp-plus/main/README.md", "kind": "Primary source · project README"},
+        {"id": 4, "label": "Real-call metrics — lookup durations and response-delay sample", "url": "https://raw.githubusercontent.com/amitamit10/hermes-whatsapp-plus/main/docs/call_metrics.json", "kind": "Primary data · repository measurement file"},
+        {"id": 5, "label": "Chart-generation script — metric definitions and caveats", "url": "https://raw.githubusercontent.com/amitamit10/hermes-whatsapp-plus/main/docs/make_charts.py", "kind": "Primary source · chart methodology"},
+        {"id": 16, "label": "Voice-call README — experimental status and sample-size note", "url": "https://raw.githubusercontent.com/amitamit10/hermes-whatsapp-plus/main/voice-call/README.md", "kind": "Primary source · experimental component documentation"}
+      ],
+      "lede": "Group chat is where a capable agent can fail socially: miss the setup, repeat itself, or keep answering until two bots drown out the room. WhatsApp Plus tries to make those failure modes explicit.",
+      "sections": [
+        {
+          "heading": "It wraps the platform; it does not fork Hermes",
+          "paragraphs": [
+            "Hermes WhatsApp Plus describes itself as a native plugin, not a fork of Hermes Agent. It subclasses the stock WhatsApp adapter, registers through the plugin API, and generates its bridge from the current stock bridge with two hook insertions. If those hook anchors change upstream, the README says the plugin falls back to the stock bridge and raises an alert.[[3]]",
+            "That is a pragmatic maintenance strategy: keep the upstream bridge visible and add behavior around it instead of carrying a separate agent tree. The repository documents compatibility with Hermes 0.21.1 and `main` as of October 2026. The important caveat is right there too: future bridge changes can still change what the plugin can safely extend.[[3]]"
+          ]
+        },
+        {
+          "heading": "Give the agent a slice of the room, not the whole year",
+          "paragraphs": [
+            "When the agent is addressed in a group, the plugin can supply messages it has not seen yet, marked so the new context is distinguishable. The documented context can include a member roster, images, and voice-note transcripts. The project says group history is searchable for a year.[[3]]",
+            "That makes the useful unit of memory smaller than “replay every message.” The agent needs enough of the conversation to understand the question in front of it. The feature is not just recall; it is a policy about what gets stored, how the new slice is marked, and when the assistant is invited into the room."
+          ]
+        },
+        {
+          "heading": "Identity is not the same as permission",
+          "paragraphs": [
+            "The plugin separates the owner, limited contacts, collaborating bots, temporary contacts, and strangers. Those roles do not receive identical capabilities. The README describes limited users as chat plus read-only tools, while also allowing them to ask the bot to message a phone number; collaborating bots are rate-limited and subject to a consecutive-reply cap.[[3]]",
+            "Groups the owner belongs to are allowed automatically but restricted to chat-only until approved from a private chat; the README also describes an exception when the owner and a limited user are both members. Strangers can be ignored or paired through a private flow. That is a more useful way to think about trust than a single allowlist: recognizing a sender is one question; deciding what that sender can make the agent do is another.[[3]]"
+          ]
+        },
+        {
+          "heading": "Silence is a feature",
+          "paragraphs": [
+            "For bot-to-bot rooms, the project documents a loop brake, automatic muting, a `[NO_REPLY]` silence path, and a pause control. It also lists explicit sending limits: 30 messages per hour and 10 new numbers per day, with random gaps for campaigns. The point is not to make the agent quieter for its own sake; it is to give it a clear way to stop participating.[[3]]",
+            "The plugin adds tools for messages, history, groups, delivery status, reactions, polls, pairing, and settings. Optional voice calls live in a separate component and are marked experimental; the voice README describes the patched calling engine as unofficial and fragile.[[3]][[16]]",
+            "The main README warns that WhatsApp can restrict personal-account automation if abused. The voice-call notes say WhatsApp can change the VoIP path and automated use may violate its terms; they recommend a number you can afford to lose, not a personal one.[[3]][[16]]"
+          ]
+        },
+        {
+          "heading": "The repository publishes measurements—and labels their limits",
+          "paragraphs": [
+            "The project includes timings from real calls, with numbers only and no conversation text in its metric file. In one answered call, three lookups—weather, opening hours, and shop checkout—started at the same time. Their recorded durations were 18.110, 23.814, and 34.498 seconds.[[4]][[5]]",
+            "Adding those durations gives 76.422 seconds, but that is arithmetic, not an observed sequential run. The longest measured lookup was 34.498 seconds, and each lookup was a full Hermes turn with tools—not voice-response latency. The chart above preserves those distinctions instead of turning one call into a grand performance claim.[[4]][[5]]"
+          ]
+        },
+        {
+          "heading": "Voice is an experiment, not a benchmark",
+          "paragraphs": [
+            "The same repository records a callback with two spoken answers averaging 346 milliseconds, with a 682-millisecond slowest answer, and a 98-second answered call with one answer at 963 milliseconds. That is three answers across two calls. The project's own voice-call README calls the sample small and says to read it as first measurements, not a benchmark.[[4]][[16]]",
+            "The component uses a patched copy of an upstream calling library as a second linked device, and its documentation calls the setup unofficial and fragile. The plugin is most interesting where it combines bounded group context, role-specific permissions, and a brake; the voice branch is a useful engineering experiment whose evidence should stay as modest as its sample.[[16]]"
+          ],
+          "figure": {
+            "src": "/assets/story-visual-whatsapp-latency.svg",
+            "alt": "Small-sample chart of voice response start delay: 346 ms average across two answers in a 46-second callback, and 963 ms for one answer in a 98-second call; the slowest callback answer was 682 ms.",
+            "caption": "Three spoken answers across two real calls. The repository explicitly says this is a sanity check, not a benchmark. [[4]][[16]]",
+            "data_table": {
+              "summary": "View response-start measurements",
+              "caption": "Three spoken answers across two real calls; this is a sanity check, not a benchmark.",
+              "headers": ["Call", "Call length", "Answers", "Average start delay", "Slowest answer"],
+              "rows": [["Callback", "46 seconds", "2", "346 ms", "682 ms"], ["Answered", "98 seconds", "1", "963 ms", "963 ms"]]
+            }
+          }
+        }
+      ],
+      "takeaway": "A group-chat agent needs more than memory. It needs role-aware permissions, a pace limit, and a reliable way to stop talking.",
+      "source_note": "Plugin README, metric files and experimental voice-call documentation checked 2 November 2026. WhatsApp may change its platform behavior; the project README describes its own current limits."
+    },
+    {
+      "slug": "source-first-linkedin-workflow",
+      "title": "A LinkedIn post is a pipeline, not a prompt",
+      "dek": "Two Hermes skills connect source research to human review and authorized publishing—and keep performance claims honest.",
+      "category": "Creator workflow",
+      "published": "2026-11-02",
+      "updated": "2026-11-02",
+      "source_checked": "2026-11-02",
+      "status": "Two reusable Hermes skills · publishing needs an authorized connection",
+      "status_tone": "gated",
+      "illustration": "publishing",
+      "alt": "Workflow diagram showing primary-source research, drafting, real visuals, human review, explicitly authorized publishing, readback, and cautious analytics iteration.",
+      "cover_asset": "/assets/story-visual-linkedin-workflow.svg",
+      "cover_caption": "Editorial synthesis of the two public skill repositories: a documented workflow, not a measured conversion funnel. [[9]][[10]][[12]][[13]]",
+      "tags": ["LinkedIn", "Research", "Publishing", "Analytics", "Hermes skills"],
+      "repositories": [
+        {"name": "linkedin-publishing-skills", "url": "https://github.com/amitamit10/linkedin-publishing-skills", "kind": "First public repository"},
+        {"name": "hermes-linkedin-posts", "url": "https://github.com/amitamit10/hermes-linkedin-posts", "kind": "Expanded workflow"}
+      ],
+      "sources": [
+        {"id": 9, "label": "LinkedIn Publishing Skills README — package scope and authorized publishing", "url": "https://raw.githubusercontent.com/amitamit10/linkedin-publishing-skills/main/README.md", "kind": "Primary source · community skill repository"},
+        {"id": 10, "label": "LinkedIn Posts skill — research, drafting, authorization and readback", "url": "https://raw.githubusercontent.com/amitamit10/linkedin-publishing-skills/main/skills/linkedin-posts/SKILL.md", "kind": "Primary source · skill instructions"},
+        {"id": 11, "label": "Provenance and licensing — source origin and release scope", "url": "https://raw.githubusercontent.com/amitamit10/linkedin-publishing-skills/main/PROVENANCE.md", "kind": "Primary source · provenance"},
+        {"id": 12, "label": "Hermes LinkedIn Posts README — expanded skill scope", "url": "https://raw.githubusercontent.com/amitamit10/hermes-linkedin-posts/main/README.md", "kind": "Primary source · expanded skill repository"},
+        {"id": 13, "label": "Expanded LinkedIn Posts skill — visuals, publishing and analytics caveats", "url": "https://raw.githubusercontent.com/amitamit10/hermes-linkedin-posts/main/linkedin-posts/SKILL.md", "kind": "Primary source · skill instructions"}
+      ],
+      "lede": "The short post is the last artifact. The more interesting system is the chain that connects a source to a claim, a draft to a genuine visual, and a public post to an accountable author.",
+      "sections": [
+        {
+          "heading": "Two repositories show an editorial progression",
+          "paragraphs": [
+            "The first repository packages a community-maintained Hermes skill for researching, drafting, quality-checking, and publishing LinkedIn posts through a user-authorized Composio connection. Its README is explicit that the project is not affiliated with LinkedIn, Microsoft, Composio, or Nous Research.[[9]]",
+            "The expanded `hermes-linkedin-posts` repository extends the workflow to sourced posts with benchmark visuals, publishing, one-shot scheduling, and iteration from analytics snapshots. Together, the two repositories tell a coherent story: one packages a publishing skill; the other makes the editorial loop and its media checks more explicit.[[12]][[13]]"
+          ]
+        },
+        {
+          "heading": "Research comes before the opening line",
+          "paragraphs": [
+            "The workflow starts with primary sources and asks what they actually establish. The skill tells the writer to separate confirmed facts, company claims, estimates, and interpretation; it also says not to invent figures, quotes, results, or benchmark comparisons.[[10]][[13]]",
+            "That order changes the writing task. The opening still needs to earn attention, but the body has to carry the claim. If a source supports only a narrow comparison, the post should not quietly turn it into a universal ranking. If a metric is shown, the skill asks for its version, comparison, effort setting, cost basis, and caveats.[[13]]"
+          ]
+        },
+        {
+          "heading": "A visual is evidence, not a shortcut",
+          "paragraphs": [
+            "For benchmark and product posts, the expanded skill prefers genuine visuals from the source chart or table over an invented graphic. It calls out details that are easy to crop away by accident: the chart title, legend, axes, effort labels, and footnotes. A decorative takeaway can be added separately, but the underlying data must remain attributed and intact.[[13]]",
+            "That makes the visual step a fact-checking step. A chart with no visible axis or missing comparison label can be more persuasive than the evidence deserves. The skill explicitly says not to use generated imagery to invent benchmark data; its recommendation is to inspect the source and the final attachment before publishing.[[13]]"
+          ]
+        },
+        {
+          "heading": "Publishing is a boundary, not an autocomplete",
+          "paragraphs": [
+            "A draft or a link is not permission to publish. The first repository says that public posting or scheduling requires a clear request for the exact action and content. The expanded skill also requires an authorized LinkedIn connection and a checked author identity before a live write.[[9]][[10]][[13]]",
+            "After publishing, the workflow does not stop at an API success message. The instructions call for reading back the exact post, checking its visibility and media, and verifying any first comment against the intended post. That is how the workflow distinguishes “draft prepared,” “post created,” and “post actually visible.”[[10]][[13]]"
+          ]
+        },
+        {
+          "heading": "Use analytics to choose a test, not declare a law",
+          "paragraphs": [
+            "The expanded skill separates reach, engagement, watch time, profile activity, and follows. It asks writers to preserve the date window and denominator, show the numerator for rates, and treat low-volume results as directional. Its own documentation warns that the managed publishing connection may not provide read or analytics access.[[13]]",
+            "That is a better feedback loop than “the post got impressions, therefore this format always wins.” One observation can suggest a question for the next post; it cannot settle it. The point of analytics here is to build a small, bounded experiment while keeping the underlying sample and access limits visible.[[11]][[13]]"
+          ]
+        },
+        {
+          "heading": "The durable idea is traceability",
+          "paragraphs": [
+            "The workflow is useful even if the reader never installs either skill. Keep the source close to the claim. Keep the visual tied to the source. Keep the human decision between a finished draft and a public post. Then read the result back before calling the task complete.[[10]][[13]]",
+            "That is a more defensible publishing system than optimizing for output volume. The skills do not promise reach, universal analytics access, or automatic editorial judgement. They document a repeatable chain in which the author stays identifiable and the evidence stays checkable."
+          ]
+        }
+      ],
+      "takeaway": "A trustworthy publishing workflow preserves the chain from source to claim to public post—and keeps the human decision where it belongs.",
+      "source_note": "Both public skill repositories and their provenance notes checked 2 November 2026. They are independent community projects, not official LinkedIn integrations."
+    },
+    {
+      "slug": "goat-bounded-web-research",
+      "title": "GOAT makes web research a set of bounded choices",
+      "dek": "Seven closed-schema tools route an agent to a specific public-web job—and make retrieval limits visible.",
+      "category": "Open-source tools",
+      "published": "2026-11-02",
+      "updated": "2026-11-02",
+      "source_checked": "2026-11-02",
+      "status": "Local release candidate 0.2.0 · not published or activated",
+      "status_tone": "candidate",
+      "illustration": "goat",
+      "alt": "A source-derived map of seven bounded web tools, showing search, extraction, crawl, probe, extractive answer, filtered search, and vertical lookup with their stated limits.",
+      "cover_asset": "/assets/story-visual-goat-tools.svg",
+      "cover_caption": "The limits are copied from the public tool contract and release-candidate notes; this is an editorial map, not a benchmark or live run. [[14]][[15]]",
+      "tags": ["GOAT", "Web research", "MCP", "Open source", "Hermes Agent"],
+      "repositories": [
+        {"name": "hermes-community-plugins", "url": "https://github.com/amitamit10/hermes-community-plugins", "kind": "Public repository"},
+        {"name": "Hermes Agent", "url": "https://github.com/NousResearch/hermes-agent", "kind": "Upstream agent project"}
+      ],
+      "sources": [
+        {"id": 14, "label": "Hermes Community Plugins README — seven tool contracts and routing", "url": "https://raw.githubusercontent.com/amitamit10/hermes-community-plugins/main/README.md", "kind": "Primary source · project README"},
+        {"id": 15, "label": "GOAT release-candidate notes — publication status and known boundary", "url": "https://raw.githubusercontent.com/amitamit10/hermes-community-plugins/main/RELEASE-CANDIDATE.md", "kind": "Primary source · candidate status"}
+      ],
+      "lede": "“Search the web” sounds like one action. In practice, it can mean discovery, page extraction, crawling, reachability, metadata lookup, or an answer limited to a handful of snippets. GOAT splits those decisions into separate contracts.",
+      "sections": [
+        {
+          "heading": "Seven jobs, not one magic endpoint",
+          "paragraphs": [
+            "The public repository describes GOAT as a collection of seven tools. Search returns at most five results; extract fetches one public HTTPS page and caps its text at 8,000 characters; crawl stays on one origin and stops at depth two or ten pages. Probe answers only whether a host is reachable and deliberately returns no page body.[[14]]",
+            "The other three tools narrow the task in different ways. `goat_answer` returns an extractive answer from up to five Wikipedia Action API snippets, not an LLM-written general-web synthesis. Filtered search applies time, domain, or language constraints and excludes results with missing metadata. Vertical search selects one official metadata source, such as Crossref, GDELT, or Wikimedia Commons.[[14]]",
+            "The map above puts those limits beside the tool names. That is the point: “web research” becomes a choice among bounded operations, each with a different evidence shape and a different stopping point."
+          ]
+        },
+        {
+          "heading": "A smaller result is easier to inspect",
+          "paragraphs": [
+            "The limits are part of the API contract, not merely tuning knobs. A caller can ask for one page instead of a crawl, a reachability probe instead of content, or a citation-bearing extractive answer instead of an open-ended synthesis. The same-origin crawl bound makes its search area visible before it begins.[[14]]",
+            "That does not guarantee a complete answer. A page can be blocked, a metadata field can be absent, and a provider can change. The candidate README describes missing metadata as a reason to exclude a result rather than infer a value. A bounded fetch makes its scope easier to inspect; it does not make the retrieved material true by itself.[[14]]"
+          ]
+        },
+        {
+          "heading": "Failure behavior is part of the feature",
+          "paragraphs": [
+            "The tools use closed schemas, so an unknown field is not meant to silently become a best-effort request. The README describes predictable errors for blocked URLs, blocked redirects, and missing configuration, with sanitized public error envelopes instead of stack traces or credentials.[[14]]",
+            "There is a nuance worth preserving. The README also discusses a separate provider-challenge error, but the release-candidate notes say that `PROVIDER_BLOCKED` depends on a provider-sibling fix and is not supported by baseline `1311d89a` alone. The honest description is a candidate that documents this gap—not a claim that every failure path is already complete.[[14]][[15]]"
+          ]
+        },
+        {
+          "heading": "A router should choose one clear path",
+          "paragraphs": [
+            "Alongside the tools, the repository describes a router that maps task classes to canonical providers. A request for one page can use extraction; a date-filtered discovery request can use filtered search; a scholarly lookup can use a metadata vertical. The goal is to avoid launching every backend just because the task says “research.”[[14]]",
+            "That is a claim about explainability, not truth. One appropriate provider, one explicit contract, and a short source list are easier to inspect than an opaque bundle of simultaneous requests. The evidence still has to be read, compared, and cited by whoever writes the final answer."
+          ]
+        },
+        {
+          "heading": "Candidate status is part of the story",
+          "paragraphs": [
+            "The README labels this tree a local candidate, and the release-candidate notes identify version 0.2.0. They explicitly say it is not a published release, not a pushed tag, and not an activated live plugin. This article describes the public candidate and its stated design; it does not imply an installation or production deployment.[[14]][[15]]",
+            "That status is not a footnote. A tool should be evaluated against the code and candidate gates that exist today, not the release label someone hopes to use later. The repository says to verify on a clean second machine before publication or enablement; the next meaningful milestone is reproducibility, not a larger feature list.[[14]][[15]]"
+          ]
+        }
+      ],
+      "takeaway": "GOAT does not make sources true. It makes the route to them smaller, more inspectable, and easier to stop when the evidence runs out.",
+      "source_note": "Public README and release-candidate notes checked 2 November 2026. The repository's current status is candidate-only; do not treat it as published or activated."
+    },
+    {
+      "kind": "news",
+      "slug": "anthropic-usage-policy-agent-controls-nov-12",
+      "title": "Anthropic’s November policy update makes agent controls explicit",
+      "dek": "The revision clarifies rules for deceptive campaigns, high-risk recommendations, and autonomous hardware; it takes effect November 12.",
+      "category": "AI governance",
+      "published": "2026-11-02",
+      "published_at": "2026-11-02T16:22:23+02:00",
+      "human_reviewed": false,
+      "repositories": [],
+      "illustration": "news",
+      "alt": "Abstract newsroom illustration linking a policy document to an agent pause control; not a product screenshot or photograph.",
+      "cover_asset": "/assets/newsroom-anthropic-usage-policy-agent-controls-nov-12.svg",
+      "cover_caption": "Abstract editorial cover prepared from the policy sources; it is an illustration, not a product screenshot.",
+      "frontpage_asset": "/assets/frontpage-anthropic-policy.webp",
+      "frontpage_art_alt": "Conceptual illustration of three glass policy gates crossed by a cobalt signal; not a product screenshot.",
+      "frontpage_art_caption": "Concept art · not a product screenshot",
+      "tags": ["Anthropic", "AI policy", "Agent systems", "Safety", "Developers"],
+      "sources": [
+        {"id": 1, "label": "Anthropic — 2026 Usage Policy update", "url": "https://www.anthropic.com/news/2026-usage-policy-update", "kind": "Primary policy statement"},
+        {"id": 2, "label": "Unite.AI — AI-generated and editor-reviewed policy coverage", "url": "https://www.unite.ai/anthropic-updates-usage-policy-adding-model-abuse-and-deception-rules", "kind": "Independent coverage · AI-generated, editor-reviewed"}
+      ],
+      "lede": "Anthropic’s revised Usage Policy takes effect November 12.[[1]] The changes clarify rules for deceptive campaigns, high-risk recommendations, and agents connected to physical hardware.[[1]]",
+      "source_checked": "2026-11-02",
+      "sections": [
+        {
+          "heading": "The change is mostly clarity, but not cosmetic",
+          "paragraphs": [
+            "Anthropic says its revised Usage Policy takes effect November 12 and that most changes clarify rules already in place.[[1]] It says the update responds to Claude taking on longer, more independent work and to misuse patterns in influence operations, weapons development, and surveillance.[[1]] This is a vendor policy for Anthropic products, not a general AI law or industry-wide standard.[[1]]",
+            "The clearest structural change is a new section, “Do Not Engage in Deceptive Campaigns or Artificial Activity.”[[1]] Anthropic says it covers political and commercial deception, including hiding who is behind a message, amplifying content through fake accounts or posts, and building infrastructure for influence operations.[[1]] Unite.AI’s October 8, 2026 report describes the same consolidation.[[2]]"
+          ]
+        },
+        {
+          "heading": "The boundaries reach beyond generated text",
+          "paragraphs": [
+            "Anthropic describes the elections section as focused on deception and disruption, rather than a blanket prohibition on personalized vote or campaign targeting.[[1]] It says examples such as impersonating officials or spreading false voting information remain disallowed; it removed the blanket rule on personalized targeting for legitimate civic work, such as multilingual voter information and ballot-cure notices.[[1]] The company says deceptive targeting and misuse of personal data remain prohibited.[[1]]",
+            "The updated weapons section explicitly covers software and components that make weapons work, including actions such as arming drones.[[1]] Anthropic says non-consensual tracking is prohibited whether data is collected live or analyzed later, and that Claude cannot decide or recommend who to investigate, arrest, or charge.[[1]] Anthropic says the weapons and surveillance revisions clarify its prior enforcement practice rather than change it.[[1]]"
+          ]
+        },
+        {
+          "heading": "Agent builders get two practical control checks",
+          "paragraphs": [
+            "For a developer integrating Claude, the most actionable checklist is not limited to content filters.[[1]] Anthropic’s policy requires qualified human review when recommendations could affect health, legal rights, finances, livelihood, or access to essential services, and requires affected people to be told AI was used.[[1]] Anthropic says these requirements already existed; the revision makes covered recommendations easier to identify.[[1]]",
+            "For agents connected to hardware that can take physical actions and cause injury, Anthropic’s policy calls for a qualified operator who can observe and stop the equipment, plus a safe state if Claude disconnects.[[1]] This shifts a builder’s check from only “what did the model say?” to whether an operator can intervene and the hardware fails safely.[[1]] That framing is our interpretation of the stated controls.[[1]]",
+            "Anthropic added a prohibition on sustained, needless cruelty toward its models, while excluding ordinary frustration, pushback, dark creative themes, testing, and research.[[1]] Unite.AI reports the same caveat; its contributor disclosure says the article was AI-generated and editorially reviewed.[[2]] Describing the policy as a general ban on criticism would overstate the text.[[1]]"
+          ]
+        },
+        {
+          "heading": "What developers can check before November 12",
+          "paragraphs": [
+            "The policy gives builders a reason to audit how identity, delegation, and physical actions are handled before November 12.[[1]] Teams using Claude in production can map where a workflow might obscure who is speaking, generate or amplify posts, need human review of high-impact recommendations, or depend on hardware remaining safe after a model disconnects.[[1]] This is a newsroom checklist derived from the policy, not an additional Anthropic requirement.[[1]]",
+            "Anthropic’s announcement does not describe how every edge case will be assessed in practice.[[1]] The company says most changes clarify existing rules and explicitly says the weapons and surveillance revisions reflect enforcement practices already applied.[[1]] We read the update as more precise notice for developers and users, while future applications will still depend on Anthropic’s enforcement decisions.[[1]]"
+          ]
+        }
+      ],
+      "takeaway": "The update is not a general AI law.[[1]] It is a vendor-specific policy that makes identity, human review, and safe physical control more explicit for Claude-based systems.[[1]]",
+      "source_note": "Sources accessed November 2, 2026.[[1]][[2]] Unite.AI identifies its contributor as an AI-generated research agent and says its editorial team reviewed the coverage.[[2]] The report summarizes published policy text; it is not an independent test of enforcement.[[1]][[2]]"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://amit-hermes-newsroom.vercel.app/sitemap.xml
+Sitemap: https://amit-hermes-newsroom.vercel.app/news-sitemap.xml

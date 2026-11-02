@@ -1,0 +1,21 @@
+# Local credentials and tooling state
+.env
+.env.*
+.vercel/
+*.bak-secrets
+__pycache__/
+*.py[cod]
+node_modules/
+
+# Internal project notes and newsroom operations
+PROJECT.md
+ops/**
+!ops/generate_cover.py
+tests/test_ops_private.py
+
+# Unused legacy masters and prompt/provenance notes
+media-source/
+media-source-v3/*
+!media-source-v3/*.png
+media-source-v3/README.md
+media-source-v3/prompts.md

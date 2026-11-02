@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Voice response start delay in two measured WhatsApp calls</title>
+<desc id="desc">A small-sample chart: in a 46-second callback, two answers averaged 346 milliseconds and the slowest was 682 milliseconds. In a 98-second answered call, one answer averaged and reached 963 milliseconds. These are three answers across two real calls, not a benchmark.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F4F7F6"/><stop offset="1" stop-color="#E6F2F2"/></linearGradient>
+  <linearGradient id="avg" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0D6571"/><stop offset="1" stop-color="#69AEB3"/></linearGradient>
+</defs>
+<rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+<text x="58" y="58" fill="#0D6571" font-family="IBM Plex Mono,monospace" font-size="15" font-weight="600" letter-spacing="2">WHATSAPP PLUS / VOICE EXPERIMENT</text>
+<text x="58" y="112" fill="#19313B" font-family="Manrope,Arial,sans-serif" font-size="36" font-weight="800" letter-spacing="-1.5">When did the voice start answering?</text>
+<text x="58" y="148" fill="#596D75" font-family="Manrope,Arial,sans-serif" font-size="17">Time from the end of a sentence until the voice starts speaking.</text>
+<text x="230" y="205" fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="12">MILLISECONDS</text>
+<g stroke="#D9E1E0" stroke-width="1"><path d="M230 220v264M430 220v264M630 220v264M830 220v264M1030 220v264"/></g>
+<g fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="12" text-anchor="middle"><text x="230" y="505">0</text><text x="430" y="505">250</text><text x="630" y="505">500</text><text x="830" y="505">750</text><text x="1030" y="505">1,000</text></g>
+<g fill="#334B56" font-family="Manrope,Arial,sans-serif" font-size="15" font-weight="700" text-anchor="end"><text x="208" y="290">Callback · 46 s</text><text x="208" y="405">Answered · 98 s</text></g>
+<rect x="230" y="258" width="277" height="40" rx="8" fill="url(#avg)"/><rect x="230" y="373" width="770" height="40" rx="8" fill="url(#avg)"/>
+<path d="M776 247v62M1000 362v62" stroke="#805000" stroke-width="4" stroke-linecap="round"/>
+<g fill="#19313B" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="600"><text x="520" y="284">avg 346 ms · n=2</text><text x="1020" y="399">avg 963 ms · n=1</text></g>
+<g fill="#805000" font-family="IBM Plex Mono,monospace" font-size="12"><text x="786" y="242">slowest 682</text><text x="1009" y="355">slowest 963</text></g>
+<rect x="58" y="536" width="1084" height="74" rx="16" fill="#ffffff" stroke="#D9E1E0"/>
+<text x="82" y="566" fill="#19313B" font-family="Manrope,Arial,sans-serif" font-size="15" font-weight="750">Three spoken answers across two real calls</text>
+<text x="82" y="590" fill="#596D75" font-family="Manrope,Arial,sans-serif" font-size="13">The repository labels these first measurements a sanity check, not a benchmark.</text>
+<text x="58" y="642" fill="#596D75" font-family="IBM Plex Mono,monospace" font-size="11">SOURCE: docs/call_metrics.json + voice-call/README.md  ·  SMALL SAMPLE, NOT A BENCHMARK</text>
+</svg>
