@@ -173,15 +173,19 @@ class InteractiveNewsroomTests(unittest.TestCase):
 
     def test_mobile_home_prioritizes_lead_and_keeps_latest_feed_visible(self):
         css = (ROOT / "static/site.css").read_text(encoding="utf-8")
+        home = (ROOT / "index.html").read_text(encoding="utf-8")
         touch_css = css.split("@media (max-width: 760px) {", 1)[1].split("@media (max-width: 390px)", 1)[0]
         mobile_css = css.rsplit("@media (max-width: 760px) {", 1)[1].split("\n}", 1)[0]
         self.assertIn(".frontpage-lead {", mobile_css)
         self.assertIn(".frontpage-lead-media img {", mobile_css)
         self.assertIn(".topic-rail-inner {", mobile_css)
-        self.assertIn("@media (max-width: 630px) {", css)
-        cue_css = css.split("@media (max-width: 630px) {", 1)[1].split("\n}", 1)[0]
+        self.assertIn("@media (max-width: 634px) {", css)
+        cue_css = css.split("@media (max-width: 634px) {", 1)[1].split("\n}", 1)[0]
         self.assertIn(".topic-rail::after {", cue_css)
         self.assertIn("linear-gradient(90deg, transparent", cue_css)
+        self.assertIn(".topic-rail-cue {", cue_css)
+        self.assertIn("z-index: 2", cue_css)
+        self.assertIn('<span class="topic-rail-cue" aria-hidden="true">→</span>', home)
         self.assertNotIn(".desk-wire-inner {", mobile_css)
         self.assertIn(".latest-feed-list {", mobile_css)
         self.assertNotIn(".latest-section .section-heading h2, .latest-section .section-heading .section-intro { display: none; }", css)

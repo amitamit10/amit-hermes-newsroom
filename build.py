@@ -325,6 +325,7 @@ def homepage(stories: list[dict]) -> str:
     )
     category_rail = f'''<nav class="topic-rail" aria-label="Browse story topics">
     <div class="topic-rail-inner"><a class="topic-link topic-link--primary" href="#latest-edition">Latest</a><a class="topic-link" href="#stories">All stories</a>{category_links}</div>
+    <span class="topic-rail-cue" aria-hidden="true">→</span>
   </nav>'''
 
     category_buttons = '<button class="filter-chip is-selected" type="button" data-filter="all" aria-pressed="true">All topics</button>' + "\n" + "\n".join(
