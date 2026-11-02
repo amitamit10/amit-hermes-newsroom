@@ -616,3 +616,17 @@ body.interactive-ready .visual-expand { display: inline-flex; }
   .frontpage-lead h1 { font-size: clamp(27px, 8.6vw, 34px); }
   .latest-item h3 { font-size: 16px; }
 }
+@media (max-width: 630px) {
+  .topic-rail { position: relative; }
+  .topic-rail::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 1px;
+    width: 28px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, var(--surface) 78%);
+  }
+}

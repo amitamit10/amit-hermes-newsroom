@@ -178,6 +178,10 @@ class InteractiveNewsroomTests(unittest.TestCase):
         self.assertIn(".frontpage-lead {", mobile_css)
         self.assertIn(".frontpage-lead-media img {", mobile_css)
         self.assertIn(".topic-rail-inner {", mobile_css)
+        self.assertIn("@media (max-width: 630px) {", css)
+        cue_css = css.split("@media (max-width: 630px) {", 1)[1].split("\n}", 1)[0]
+        self.assertIn(".topic-rail::after {", cue_css)
+        self.assertIn("linear-gradient(90deg, transparent", cue_css)
         self.assertNotIn(".desk-wire-inner {", mobile_css)
         self.assertIn(".latest-feed-list {", mobile_css)
         self.assertNotIn(".latest-section .section-heading h2, .latest-section .section-heading .section-intro { display: none; }", css)
